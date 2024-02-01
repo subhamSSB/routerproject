@@ -1,13 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+
 import reportWebVitals from './reportWebVitals';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import App from './App';
+import Home from './components/Home/Home';
+import About from './components/about/About';
+import Contact from './components/contact/Contact';
+import User from './components/users/User';
+import Github,{gitHubInfo} from './components/github/Github';
+
+const router = createBrowserRouter([
+  {
+    path:'/',
+    element:<App/>,
+    children:[
+      {
+        path:"",
+        element:<Home/>
+      },
+      {
+        path:"/about",
+        element:<About/>
+      },
+      {
+        path:"contact",
+        element:<Contact/>
+      },
+      {
+        path:"user/:userId",
+        element:<User/>
+      },
+      {
+        loader:gitHubInfo,
+        path:"/github",
+       
+        element:<Github/>
+      }
+    ]
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </React.StrictMode>
 );
 
